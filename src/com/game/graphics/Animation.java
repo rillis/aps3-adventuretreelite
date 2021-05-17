@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Animation {
     public ArrayList<BufferedImage> images = new ArrayList<>();
     public int currentImage = 0;
-    public int fps = 10; // FPS PADRÃO
+    public int fps = 10;
     private long lastTime = System.nanoTime();
 
     public void playAnimation(){

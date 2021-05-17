@@ -1,25 +1,16 @@
 package com.game.graphics;
 
-import com.game.Game;
-import com.game.config.Config;
-import com.game.graphics.mob.Enemy;
-import com.game.graphics.mob.Player;
-import com.game.graphics.screens.Shop;
-import com.game.input.Input;
-import com.game.input.MouseInput;
-import com.game.state.GameState;
-import com.game.graphics.screens.Terrain;
-import com.game.world.SlotTree;
-import com.game.world.Tree;
+import com.game.*;
+import com.game.graphics.screens.*;
+import com.game.input.*;
+import com.game.state.*;
+import com.game.world.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.awt.image.VolatileImage;
-import java.io.IOException;
-import java.io.InputStream;
+import java.awt.event.*;
+import java.awt.image.*;
+import java.io.*;
 
 public class Renderer {
     public static Thread threadRender;
@@ -32,9 +23,8 @@ public class Renderer {
     public static float screenFactor;
 
     private static long lastFPSCheck = 0;
-    private static int actualFPS, totalFrames;
-
-    private static final int targetTime = 1000000000 / Config.targetFPS;
+    private static int totalFrames;
+    private static final int targetTime = 1000000000 / 100;
 
     public static void init(){
         Frame frame = new Frame();
@@ -66,7 +56,6 @@ public class Renderer {
         frame.toFront();
         frame.requestFocus();
 
-        canvas.addKeyListener(new Input());
         canvas.addMouseListener(new MouseInput());
 
         Tree.init();
@@ -89,7 +78,6 @@ public class Renderer {
                 totalFrames++;
                 if (System.nanoTime() > lastFPSCheck+ 1000000000){
                     lastFPSCheck = System.nanoTime();
-                    actualFPS = totalFrames;
                     totalFrames = 0;
                 }
 
@@ -107,7 +95,7 @@ public class Renderer {
 
                     g.setColor(Color.BLACK);
                     g.setFont(getFont("TeenyTinyPixls"));
-                    g.drawString(formatCoins(Player.coins),43,83);
+                    g.drawString(formatCoins(Shop.coins),43,83);
                 }else if(GameState.state == GameState.MENU){
                     new StaticSprite(0,0,false,"menu").render(g);
                 }else{
@@ -115,12 +103,6 @@ public class Renderer {
                     Rectangle r = Shop.slots[Tree.selectedTree-1];
                     g.setColor(new Color(60, 60, 60));
                     g.drawRect(r.x,r.y,r.width-1,r.height-1);
-                }
-
-                if(Config.SHOW_FPS){
-                    g.setColor(Color.BLACK);
-                    g.setFont(getFont("TeenyTinyPixls"));
-                    g.drawString("FPS: "+actualFPS, 1, 10);
                 }
 
                 g.dispose(); //FINAL RENDER

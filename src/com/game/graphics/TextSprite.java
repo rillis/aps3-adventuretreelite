@@ -1,7 +1,6 @@
 package com.game.graphics;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class TextSprite {
 
@@ -16,8 +15,6 @@ public class TextSprite {
         this.text = text;
         this.c = c;
     }
-
-    public void update (float delta){}
 
     public void render (Graphics g){
         g.setColor(c);

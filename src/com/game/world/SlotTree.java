@@ -1,14 +1,10 @@
 package com.game.world;
 
-import com.game.config.Config;
-import com.game.graphics.Sprite;
-import com.game.graphics.StaticSprite;
-import com.game.graphics.mob.Enemy;
-import com.game.graphics.mob.Player;
-import com.game.graphics.screens.Terrain;
+import com.game.graphics.*;
+import com.game.graphics.mob.*;
+import com.game.graphics.screens.*;
 
 import java.awt.*;
-import java.util.HashMap;
 
 public class SlotTree {
     public static final int STATUS_IDLE = 0;
@@ -33,21 +29,13 @@ public class SlotTree {
         this.tree = 0;
     }
 
-    public Rectangle getRectangle(){
-        return rectangle;
-    }
-
     public int getStatus(){
         return status;
     }
 
-    public int getTree(){
-        return tree;
-    }
-
     public void plant(int tree){
         if (status != STATUS_IDLE){ return; }
-        if (Player.coins<Tree.trees.get(tree).getCost()){return;}
+        if (Shop.coins<Tree.trees.get(tree).getCost()){return;}
 
         this.status = STATUS_GROWING;
         this.tree = tree;
@@ -56,13 +44,13 @@ public class SlotTree {
         Terrain terrain = Terrain.currentTerrain;
         new Thread(() -> {
             try{
-                Player.coins-=Tree.trees.get(tree).getCost();
+                Shop.coins-=Tree.trees.get(tree).getCost();
                 terrain.addSprite(t);
-                Thread.sleep(Config.TREE_GROW_TIME*1000);
+                Thread.sleep(5*1000);
                 treeSprite = new StaticSprite(x-2, y-38, false, "tree"+tree);
                 terrain.addSprite(treeSprite);
                 terrain.removeSprite(t);
-                Player.coins+=Tree.trees.get(tree).getCoins();
+                Shop.coins+=Tree.trees.get(tree).getCoins();
                 status = STATUS_ADULT;
             }catch (Exception e){ e.printStackTrace(); }
         }).start();

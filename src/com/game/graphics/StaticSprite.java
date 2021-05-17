@@ -1,9 +1,5 @@
 package com.game.graphics;
 
-import com.game.graphics.Sprite;
-
-import java.awt.*;
-
 public class StaticSprite extends Sprite {
     public StaticSprite(int x, int y, boolean center, String png) {
         super(x,y,center);

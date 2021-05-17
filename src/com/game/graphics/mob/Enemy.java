@@ -1,12 +1,8 @@
 package com.game.graphics.mob;
 
-import com.game.config.Config;
-import com.game.graphics.Animation;
-import com.game.graphics.Renderer;
-import com.game.graphics.Sprite;
-import com.game.graphics.screens.Terrain;
-import com.game.world.SlotTree;
-import sun.java2d.pipe.AAShapePipe;
+import com.game.graphics.*;
+import com.game.graphics.screens.*;
+import com.game.world.*;
 
 public class Enemy extends Sprite {
     public final static int IDLE = 0;
@@ -49,24 +45,21 @@ public class Enemy extends Sprite {
         else if(status==RETURNING && animations[0]!=returning){ changeAnimation(returning); }
         else if(status==IDLE){ changeAnimation(idle); }
 
-        Terrain[] terrains = new Terrain[]{Terrain.sc1, Terrain.sc2, Terrain.sc3};
         if(status==IDLE){
             Terrain breakTerrain=null;
             SlotTree breakSlotTree=null;
-            for(Terrain terrain : terrains){
-                for(SlotTree slotTree : terrain.treeSlots){
-                    if (slotTree.getStatus() == SlotTree.STATUS_ADULT && Math.random()<=0.05){
-                        breakTerrain = terrain;
-                        breakSlotTree = slotTree;
-                        break;
-                    }
+            for(SlotTree slotTree : Terrain.currentTerrain.treeSlots){
+                if (slotTree.getStatus() == SlotTree.STATUS_ADULT && Math.random()<=0.05){
+                    breakTerrain = Terrain.currentTerrain;
+                    breakSlotTree = slotTree;
+                    break;
                 }
             }
             if (breakSlotTree==null){return;}
             if(System.nanoTime() > enemyCooldown){
                 breakSlotTree.remove(breakTerrain);
                 System.out.println("Arvore cortada");
-                enemyCooldown = System.nanoTime()+ 1000000000L * Config.EnemyCooldown;
+                enemyCooldown = System.nanoTime()+ 1000000000L * 3;
             }
         }
     }

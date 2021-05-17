@@ -1,7 +1,7 @@
 package com.game.graphics;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
 
 public class Sprite {
 

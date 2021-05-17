@@ -1,18 +1,13 @@
 package com.game.graphics.screens;
 
-import com.game.graphics.Renderer;
-import com.game.graphics.Sprite;
-import com.game.graphics.StaticSprite;
-import com.game.graphics.TextSprite;
-import com.game.graphics.mob.Player;
-import com.game.world.Tree;
+import com.game.graphics.*;
+import com.game.world.*;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.HashMap;
+import java.util.*;
 
 public class Shop {
+    public static long coins = 0;
     private static boolean spritesLocked= false;
     private final ArrayList<Sprite> sprites = new ArrayList<>();
     private final ArrayList<TextSprite> spritesText = new ArrayList<>();
